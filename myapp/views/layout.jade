@@ -1,0 +1,68 @@
+doctype html
+html
+    head
+        title= parameters.title
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
+        link(rel='stylesheet', href='/stylesheets/' + parameters.assets_title + '.css')
+        style(type='text/css')
+            @font-face {font-family: "FontFace";src: url('' + parameters.dropbox.fonts.font);}
+            #home  {
+                background-image: url('' + parameters.dropbox.backgrounds.home_section);
+                background-size: cover;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            #about, #work, #record, #prepare, #wait, #result  {
+                background-image: url(parameters.dropbox.backgrounds.about_section);
+                background-size: cover;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            #contact{
+                background-image: url(parameters.dropbox.backgrounds.end_section);
+                background-size: cover;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+    body
+
+        div#header 
+            div(class="col-sm-12 col-lg-12")
+                div(class="row")
+                    
+                    block logo
+                        div#logo
+                            if parameters.hasReturnButton
+                                div(class='serviceControl', id='return')= t('header.return')
+                            if parameters.hasQuitButton
+                                div(class='serviceControlQuit', id='quit')= t('header.quit')
+
+                    block menu
+                        if parameters.menu.has
+                            ul#menu
+                                each val, index in parameters.menu.content[0]
+                                    li
+                                        div(class='service2', id='aboutMenu')
+                                            i= t('header.menu.' + val)
+
+        block home_section
+            section(id='home', class='wallpapered container-fluid')
+                div(class='col-md-6 col-md-offset-3 text-center')
+                    div(class='top')
+                        h1(class='text-center wow bounceInDown', id='homeTitleText')= t('home.title')
+                        p(class='wow text-center bounceInDown', id='homeTitleText2')= t('home.subtitle.first')
+                        h3(class='wow text-center bounceInDown', id='homeTitleText3')= t('home.subtitle.second')
+
+                        block home_section_button
+                        div(class='text-center espace_top')
+                            i(class='btn fa fa-chevron-right colorred spec ilink wow rotateIn')
+                                span(class='btn btnleft spec ilink wow rotateIn colorred')= t('home.action.confirm')
+
+        block content
+        block scripts
+            script(src='javascripts/jquery/jquery.min.js', type='text/javascript')
+            script(src='javascripts/bootstrap/bootstrap.min.js', type='text/javascript')

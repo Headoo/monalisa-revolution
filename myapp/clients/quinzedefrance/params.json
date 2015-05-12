@@ -1,0 +1,24 @@
+{
+    "menu": {
+        "has": false,
+        "content": [{"0":"0", "1":"1", "2":"2"}]
+    },
+    "title": "Quinze De France",
+    "assets_title": "quinzedefrance",
+    "hasReturnButton": true,
+    "hasQuitButton": false,
+    "dropbox": {
+        "fonts": {
+            "font": "fonts/quinzedefrance/helveticaneue-heavy-webfont.ttf"
+        },
+        "backgrounds": {
+            "home_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/quinze_de_france.jpg?_subject_uid=201942909&w=AACUv5t9KUjeszYH1hUgU4V7VEN9fn7jOKjmzQBOqsUXPA",
+            "about_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/fond3.jpg?_subject_uid=201942909&w=AADD3yAkPU5eGfEo1pkFQjAFmplSghe5phuO6NrcoYa5ow",
+            "prepare_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/fond3.jpg?_subject_uid=201942909&w=AADD3yAkPU5eGfEo1pkFQjAFmplSghe5phuO6NrcoYa5ow",
+            "record_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/fond3.jpg?_subject_uid=201942909&w=AADD3yAkPU5eGfEo1pkFQjAFmplSghe5phuO6NrcoYa5ow",
+            "wait_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/fond3.jpg?_subject_uid=201942909&w=AADD3yAkPU5eGfEo1pkFQjAFmplSghe5phuO6NrcoYa5ow",
+            "result_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/fond3.jpg?_subject_uid=201942909&w=AADD3yAkPU5eGfEo1pkFQjAFmplSghe5phuO6NrcoYa5ow",
+            "end_section": "https://dl-web.dropbox.com/get/monalisa_customer/quinze_de_france/videos/quinze_de_france/fond2.jpg?_subject_uid=201942909&w=AADZDS-v6DQvX--0HOd2ek8jYKqXniw3hD4MGo0jd0Gdpg"            
+        } 
+    }
+}

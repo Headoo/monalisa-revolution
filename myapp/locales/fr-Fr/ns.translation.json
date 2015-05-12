@@ -1,0 +1,106 @@
+{
+    "header": {
+        "return": "Retour",
+        "quit"  : "Quitter",
+        "menu": {
+            "0": "Enregistrement",
+            "1": "Validation",            
+            "2": "Coordonnées"           
+        }
+    },
+    "home": {
+        "title"    : "Préparez-vous à soutenir le XV de France en vidéo",
+        "subtitle" : {
+            "first" : "Vous allez avoir 3 secondes pour exprimer votre soutient !",
+            "second": ""            
+        },
+        "action"   : {
+            "confirm": "Cliquez ici, ils comptent sur vous !",
+            "retry"  : ""
+        }        
+    },
+    "about": {
+        "title"    : "Vos coordonnées",
+        "subtitle" : {
+            "first" : "Vous allez enregistrer une vidéo",
+            "second": ""             
+        },
+        "form"     : {
+            "email"     : "Email",
+            "firstname" : "Prénom",
+            "name"      : "Nom",
+            "zipcode"   : "Code postal",            
+            "newsletter": "Je souhaite recevoir la newsletter",
+            "terms"     : "Je certifie avoir pris connaissance du règlement"            
+        },
+        "action"   : {
+            "confirm": "Valider",
+            "retry"  : ""
+        }
+    },
+    "work": {
+        "title"    : "Placez vous face à la caméra",
+        "subtitle" : {
+            "first" : "Cliquez sur votre image",
+            "second": ""             
+        },
+        "action"   : {
+            "confirm": "Valider",
+            "retry"  : ""
+        }
+    },
+    "prepare": {
+        "title"    : "Regardez vers la caméra",
+        "subtitle" : {
+            "first" : "L'enregistrement débutera dans...",
+            "second": ""             
+        }
+    },
+    "record": {
+        "title"    : "Ca tourne",
+        "subtitle" : {
+            "first" : "Rec",
+            "second": ""             
+        },
+        "action"   : {
+            "confirm": "Cliquez ici lorsque vous avez terminé",
+            "retry"  : ""
+        }        
+    },
+    "wait": {
+        "title"    : "Patientez un instant svp",
+        "subtitle" : {
+            "first" : "Votre vidéo est en cours de traitement",
+            "second": "",
+            "third" : ""             
+        }        
+    },
+    "result": {
+        "title"    : "Voici votre vidéo",
+        "subtitle" : {
+            "first" : "Validez-la ou recommencez",
+            "second": ""             
+        },
+        "action"   : {
+            "confirm": "Valider",
+            "retry"  : "Recommencer"
+        }        
+    },
+    "end": {
+        "title"    : "Merci !",
+        "subtitle" : {
+            "success": {
+                "first" : "Votre vidéo a été enregistrée avec succès !",
+                "second": "Vous allez recevoir un email vous invitant à la valider afin de la publier.<br/>Si vous le souhaitez vous pouvez enregistrer d'autres vidéos.<br/><br/><br/>A très bientôt."                
+            },
+            "failure": {
+                "first" : "Votre vidéo n'a pas été enregistrée !",
+                "second": "Vous n'avez pas accepté nos conditions d'utilisation, votre vidéo n'a pas été enregistrée.<br/>Si vous le souhaitez vous pouvez encore enregistrer d'autres vidéos.<br/><br/><br/>A très bientôt."                
+            }            
+        },        
+        "action"   : {
+            "confirm": "Valider",
+            "retry"  : "Recommencer"
+        }        
+    }    
+}
