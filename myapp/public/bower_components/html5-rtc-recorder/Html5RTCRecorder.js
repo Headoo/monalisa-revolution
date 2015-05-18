@@ -139,13 +139,6 @@ Html5RTCRecorder.prototype = {
      */
     record: function () {
         
-        //Close previous xmlHttpRequest connection, so we avoid memory limit
-        this.client = '';
-        
-        if (this.hideWebcamWhileRecording) {
-            this.showHideStream('hide');
-        }
-        
         this.recordAudio = '';
         this.recordVideo = '';        
         
@@ -178,45 +171,28 @@ Html5RTCRecorder.prototype = {
     /**
      * Stop both audio and video record
      *
-     * @param url   string
-     * @param param string
+     * @param url      string
+     * @param param    string
+     * @param selector string
      *
      * @returns {undefined}
      */
-    stop: function (url, param) {
+    stop: function (url, param, selector) {
         this.recordAudio.stopRecording(function() {
             this.recordVideo.stopRecording(function() {
-                this.postBlob(url, param, 'audio');
-                this.postBlob(url, param, 'video');
+
+                //Execute call back function
+                if (selector.length > 0) {
+                    var fn = window[this.callback];
+                    fn(selector);
+                }
+
                 if (true === this.option.download) {
                     this.download(this.recordAudio.getBlob(), 'video' + Date.now());
                     this.download(this.recordVideo.getBlob(), 'video' + Date.now());
                 }
             }.bind(this));
         }.bind(this));        
-    },
-
-
-    /**
-     * Downloads blob files to user disk
-     *
-     * @param blobURL Blob
-     * @param fileName string
-     */
-    download: function (blobURL, fileName) {
-        var reader = new FileReader();
-        reader.readAsDataURL(blobURL);
-        reader.onload = function (event) {
-            var save = document.createElement('a');
-            save.href = event.target.result;
-            save.target = '_blank';
-            save.download = fileName || 'unknown file';
-
-            var event = document.createEvent('Event');
-            event.initEvent('click', true, true);
-            save.dispatchEvent(event);
-            (window.URL || window.webkitURL).revokeObjectURL(save.href);
-        }.bind(this);
     },
 
 

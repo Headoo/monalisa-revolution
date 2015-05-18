@@ -7,7 +7,6 @@ var bodyParser      = require('body-parser');
 var i18n            = require('i18next-node-stable');
 var url             = require('url');
 var fs              = require('fs-extra');
-var unique          = require('unique');
 
 
 var routes          = require('./routes/index');

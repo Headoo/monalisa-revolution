@@ -29,7 +29,7 @@ a.noLink {text-decoration: none;}
 a.noLink:hover {text-decoration: none;}
 
 /* initially hide canvas */
-canvas { visibility: hidden; display:none; }
+canvas, audio { visibility: hidden; }
 
 
 

@@ -75,8 +75,9 @@ html
                     div(class='col-md-12')
                         h2 Regardez vers la caméra
                         p L'enregistrement débutera dans
+                        p 5
                         p
-                            a(class='noLink',href='#record') 5
+                            a(class='btn btn-primary btn-lg',href='#record',role='button') Valider
 
             <!-- Record -->
             block record
@@ -95,7 +96,7 @@ html
                         h2 Patientez un instant svp
                         p Votre vidéo est en cours de traitement
                         p
-                            a(class='btn btn-primary btn-lg',href='#form',role='button') Valider
+                            a(class='btn btn-primary btn-lg',href='#validation',role='button') Valider
 
             <!-- Validation -->
             block validation
@@ -104,7 +105,8 @@ html
                         h2 Voici votre vidéo
                         p Validez-là ou recommencez
                         p
-                            img(src='img/video_skull.jpg')
+                            video(id='render',controls='controls',webkit-playsinline)
+                                source(src='',type='video/webm')
                         p
                             a(class='btn btn-primary btn-lg',href='#form',role='button') Valider
                             a(class='btn btn-primary btn-lg',href='#positioning',role='button') Recommencer
@@ -148,6 +150,7 @@ html
         <!-- /container -->
         block canvas
             canvas(id='canvas')
+            audio(id='audio')
 
         block scripts
             script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
@@ -155,7 +158,7 @@ html
                 window.jQuery || document.write('<script src="javascripts/vendor/jquery-1.11.2.min.js"><\/script>')
 
             script(src='javascripts/vendor/bootstrap.min.js')
-            script(src='bower_components/html5-rtc-recorder/RecordRTC.js')
+            script(src='//cdn.WebRTC-Experiment.com/RecordRTC.js')
             script(src='bower_components/html5-rtc-recorder/html5RTCRecorder.js')
             script(src='javascripts/main.js')
 

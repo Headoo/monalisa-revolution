@@ -3,11 +3,16 @@
  * RESIZE MEDIA TO DOCUMENT PROPORTIONS
  */
 function resizeLogic () {
+
     var w = window.innerWidth;
     var h = window.innerHeight;
 
+    var ratio  = (w/h).toFixed(1);
+
     var mediaW = (w/2).toFixed(0) + 'px';
-    var mediaH = (h/2).toFixed(0) + 'px';
+    var mediaH = ((w/2)/ratio).toFixed(0) + 'px';
+
+    console.log(ratio + ' // ' + mediaW + ' // ' + mediaH );
 
     //Affect document height to each "row" class
     var elements = document.querySelectorAll('.row');
@@ -78,6 +83,7 @@ function mediaAction(link) {
             mediaRecorder.show();
             mediaRecorder.stream();
             break;
+
         case '#countdown':
             //For performance issues, hide and don't stream webcam live feed where we don't need it
             mediaRecorder.hide();
@@ -85,21 +91,28 @@ function mediaAction(link) {
 
             //Create directory
             var directoryCreateParams = "session="+session;
-            post(directoryCreateParams, 'http://localhost:3000/directory/create', '');
-
+            post(directoryCreateParams, '/directory/create', '');
             break;
+
         case '#record':
             //Stream the webcam feed but don't show it for performance issues
             mediaRecorder.stream();
             mediaRecorder.record();
             break;
+
         case '#waiting':
-            mediaRecorder.stop('http://localhost:3000/media/create', session);
+            mediaRecorder.stop('/media/create', session, '#waiting a');
             mediaRecorder.unStream();
             mediaRecorder.hide();
-
-            //mediaRecorder.writeToDisk();
             break;
+
+        case '#validation':
+            //Render recorded video from live stream
+            var video = document.getElementById('render');
+            video.src = createBlobURL(mediaRecorder.recordVideo.getBlob());
+            video.play();
+            break;
+
         default:
             //By default, don't stream and hide video elements
             mediaRecorder.unStream();
@@ -108,8 +121,24 @@ function mediaAction(link) {
 }
 
 
-function goToValidation() {
-    document.querySelectorAll('#waiting a')[0].click();
+var createBlobURL = window.createBlobURL || window.createObjectURL;
+if (!createBlobURL) {
+    var URL = window.URL || window.webkitURL;
+
+    if (URL) {
+        createBlobURL = URL.createObjectURL;
+    } else {
+        throw new Error('No Blob creation implementation found.');
+    }
+}
+
+/**
+ * Function destined to be called as call back functions
+ *
+ * @param selectors string
+ */
+function callbackMethod(selectors) {
+    document.querySelectorAll(selectors)[0].click();
 
 }
 
@@ -156,8 +185,9 @@ changeBackground('');
 var mediaRecorder = new Html5RTCRecorder();
 //Associate tag to specific id
 mediaRecorder.rtc = RecordRTC; //RecordRTC object
-mediaRecorder.callback = 'goToValidation';
+mediaRecorder.callback = 'callbackMethod';
 mediaRecorder.associate('video', 'video');
+mediaRecorder.associate('audio', 'audio');
 mediaRecorder.associate('canvas', 'canvas');
 mediaRecorder.init();
 
@@ -184,4 +214,14 @@ window.addEventListener('click', function(event) {
     //Act on media record depending on page
     mediaAction(link);
 });
+
+//Manage event listener on render video (play sound + video
+document.getElementById("render").addEventListener("play", function () {
+    mediaRecorder.audio.src =  createBlobURL(mediaRecorder.recordAudio.getBlob());
+    mediaRecorder.audio.play();
+}, false);
+
+document.getElementById("render").addEventListener("pause", function () {
+    mediaRecorder.audio.pause();
+}, false);
 
