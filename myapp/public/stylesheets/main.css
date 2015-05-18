@@ -1,0 +1,48 @@
+
+
+/*
+    ==========================================================================
+    Monalisa GENERIC CUSTOM STYLES
+    ==========================================================================
+*/
+
+body { padding-top: 50px; padding-bottom: 20px; overflow:hidden; }
+
+/* Make all div transparent */
+.jumbotron, .jumbotron .container, .container, body { background: transparent; !important  }
+
+/* Align all content to middle */
+.container h1, .container p, .container .row div h1, .container .row div h2,
+.container .row div p, .container .row div form, footer h3, footer p {
+    text-align: center;
+}
+
+/* Center verticaly every page content */
+.jumbotron div.container, .row div, footer div  {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Make a link with no styles */
+a.noLink {text-decoration: none;}
+a.noLink:hover {text-decoration: none;}
+
+/* initially hide canvas */
+canvas { visibility: hidden; display:none; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,68 +1,171 @@
 doctype html
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
 html
     head
-        title= parameters.title
-        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-        link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
-        link(rel='stylesheet', href='/stylesheets/' + parameters.assets_title + '.css')
-        style(type='text/css')
-            @font-face {font-family: "FontFace";src: url('' + parameters.dropbox.fonts.font);}
-            #home  {
-                background-image: url('' + parameters.dropbox.backgrounds.home_section);
-                background-size: cover;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-            }
-            #about, #work, #record, #prepare, #wait, #result  {
-                background-image: url(parameters.dropbox.backgrounds.about_section);
-                background-size: cover;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-            }
-            #contact{
-                background-image: url(parameters.dropbox.backgrounds.end_section);
-                background-size: cover;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-            }
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible',content='IE=edge,chrome=1')
+        title=parameters.title
+        meta(name='description',content='')
+        meta(name='viewport',content='width=device-width, initial-scale=1')
+        link(rel='apple-touch-icon',href='/img/apple-touch-icon.png')
+
+        block customJavascript
+
+        link(rel='stylesheet',href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet',href='/stylesheets/bootstrap-theme.min.css')
+        link(rel='stylesheet',href='/stylesheets/main.css')
+        link(rel='stylesheet',href='/stylesheets/custom.css')
+
+        script(src='javascripts/vendor/modernizr-2.8.3-respond-1.4.2.min.js')
+
     body
+        <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-        div#header 
-            div(class="col-sm-12 col-lg-12")
-                div(class="row")
-                    
-                    block logo
-                        div#logo
-                            if parameters.hasReturnButton
-                                div(class='serviceControl', id='return')= t('header.return')
-                            if parameters.hasQuitButton
-                                div(class='serviceControlQuit', id='quit')= t('header.quit')
+        nav(class='navbar navbar-inverse navbar-fixed-top',role='navigation')
+            div(class='container')
+                div(class='navbar-header')
+                    button(type='button',class='navbar-toggle collapsed',data-toggle='collapse',data-target='#navbar',aria-expanded='false',aria-controls='navbar')
+                        span(class='sr-only') Toggle navigation
+                        span(class='icon-bar')
+                        span(class='icon-bar')
+                        span(class='icon-bar')
 
-                    block menu
-                        if parameters.menu.has
-                            ul#menu
-                                each val, index in parameters.menu.content[0]
-                                    li
-                                        div(class='service2', id='aboutMenu')
-                                            i= t('header.menu.' + val)
+                    a(class='navbar-brand',href='#') Quitter
+                    a(class='navbar-brand',href='#') Retour
 
-        block home_section
-            section(id='home', class='wallpapered container-fluid')
-                div(class='col-md-6 col-md-offset-3 text-center')
-                    div(class='top')
-                        h1(class='text-center wow bounceInDown', id='homeTitleText')= t('home.title')
-                        p(class='wow text-center bounceInDown', id='homeTitleText2')= t('home.subtitle.first')
-                        h3(class='wow text-center bounceInDown', id='homeTitleText3')= t('home.subtitle.second')
-
-                        block home_section_button
-                        div(class='text-center espace_top')
-                            i(class='btn fa fa-chevron-right colorred spec ilink wow rotateIn')
-                                span(class='btn btnleft spec ilink wow rotateIn colorred')= t('home.action.confirm')
+                div(id='navbar',class='navbar-collapse collapse navbar-right')
+                    span(class='navbar-brand') Accueil
+                    span(class='navbar-brand') Ajustement
+                    span(class='navbar-brand') Enregistrement
+                    span(class='navbar-brand') Validation
+                    span(class='navbar-brand') Contacts
 
         block content
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        div(class='jumbotron')
+            div(class='container')
+                h1 Préparez-vous à soutenir le XV de France en vidéo !
+                p Vous allez avoir 3 secondes pour exprimer votre soutien.
+                p
+                    a(class='btn btn-primary btn-lg', href='#positioning', role='button') Cliquez ici, ils comptent sur vous!
+
+
+        div(class='container')
+
+            <!-- Positioning -->
+            block positioning
+                div(class='row', id='positioning')
+                    div(class='col-md-12')
+                        h2 Placez-vous face à la caméra
+                        p Puis cliquez sur valider
+                        p
+                            video(id='video')
+                        p
+                            a(class='btn btn-primary btn-lg',href='#countdown',role='button') Valider
+
+            <!-- Countdown -->
+            block countdown
+                div(class='row', id='countdown')
+                    div(class='col-md-12')
+                        h2 Regardez vers la caméra
+                        p L'enregistrement débutera dans
+                        p
+                            a(class='noLink',href='#record') 5
+
+            <!-- Record -->
+            block record
+                div(class='row',id='record')
+                    div(class='col-md-12')
+                        h2 Ca tourne
+                        p Rec
+                        p 3/3s
+                        p
+                            a(class='btn btn-primary btn-lg',href='#waiting',role='button') Appuyez ici quand vous avez terminé(e)!
+
+            <!-- Waiting -->
+            block waiting
+                div(class='row',id='waiting')
+                    div(class='col-md-12')
+                        h2 Patientez un instant svp
+                        p Votre vidéo est en cours de traitement
+                        p
+                            a(class='btn btn-primary btn-lg',href='#form',role='button') Valider
+
+            <!-- Validation -->
+            block validation
+                div(class='row',id='validation')
+                    div(class='col-md-12')
+                        h2 Voici votre vidéo
+                        p Validez-là ou recommencez
+                        p
+                            img(src='img/video_skull.jpg')
+                        p
+                            a(class='btn btn-primary btn-lg',href='#form',role='button') Valider
+                            a(class='btn btn-primary btn-lg',href='#positioning',role='button') Recommencer
+
+            <!-- Form -->
+            block form
+                div(class='row',id='form')
+                    div(class='col-md-12')
+                        h2 Vos coordonnées
+                        p Pour recevoir votre vidéo
+                        form(class='navbar-form',role='form',action='#footer')
+                            div(class='form-group')
+                                input(type='text',placeholder='Email',class='form-control')
+
+                            br
+                            div(class='form-group')
+                                input(type='text',placeholder='firstname',class='form-control')
+
+                            br
+                            div(class='form-group')
+                                input(type='text',placeholder='name',class='form-control')
+
+                            br
+                            input(type='checkbox',name='checkbox',id='checkbox')
+                            Je soumets ma vidéo pour la tribune des supporters et j'accepte le règlement du jeu
+
+                            br
+                            button(type='submit',class='btn btn-success') Valider
+
+            block footer
+                footer
+                    div(class='row',id='footer')
+                        div(class='col-md-12')
+                            h3 Merci !
+                            p Votre vidéo a été enregistrée avec succès.
+                            p Vous allez recevoir un email vous invitant à la valider afin de la publier.
+                            p
+                                a(class='btn btn-primary btn-lg',href='#',role='button') Revenir à la tribune
+
+
+        <!-- /container -->
+        block canvas
+            canvas(id='canvas')
+
         block scripts
-            script(src='javascripts/jquery/jquery.min.js', type='text/javascript')
-            script(src='javascripts/bootstrap/bootstrap.min.js', type='text/javascript')
+            script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+            script.
+                window.jQuery || document.write('<script src="javascripts/vendor/jquery-1.11.2.min.js"><\/script>')
+
+            script(src='javascripts/vendor/bootstrap.min.js')
+            script(src='bower_components/html5-rtc-recorder/RecordRTC.js')
+            script(src='bower_components/html5-rtc-recorder/html5RTCRecorder.js')
+            script(src='javascripts/main.js')
+
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        block analytics
+            script.
+                (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+                        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+                    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+                    e.src='//www.google-analytics.com/analytics.js';
+                    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+                ga('create','UA-XXXXX-X','auto');ga('send','pageview');

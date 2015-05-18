@@ -6,10 +6,9 @@ var cookieParser    = require('cookie-parser');
 var bodyParser      = require('body-parser');
 var i18n            = require('i18next-node-stable');
 var url             = require('url');
-var getQueryString  = require( "madlib-browser-querystring" );
-var queryString     = getQueryString();
+var fs              = require('fs-extra');
+var unique          = require('unique');
 
-console.log(queryString);
 
 var routes          = require('./routes/index');
 var users           = require('./routes/users');
@@ -24,7 +23,11 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+    keepExtensions: true,
+    limit: 900000000,
+    defer: true
+}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,7 +44,6 @@ i18n.init({
 });
 
 app.use(i18n.handle);
-
 
 
 app.use('/', routes);
