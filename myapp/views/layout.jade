@@ -117,24 +117,26 @@ html
                     div(class='col-md-12')
                         h2 Vos coordonnées
                         p Pour recevoir votre vidéo
-                        form(class='navbar-form',role='form',action='#footer')
+                        div(class='errors',id='form_errors')
+                        form(class='navbar-form',role='form',id='app_form',onsubmit='return false;')
                             div(class='form-group')
-                                input(type='text',placeholder='Email',class='form-control')
+                                input(type='text',placeholder='Email',name='email',class='form-control',id='form_email')
 
                             br
                             div(class='form-group')
-                                input(type='text',placeholder='firstname',class='form-control')
+                                input(type='text',placeholder='Firstname',name='firstname',class='form-control',id='form_firstname')
 
                             br
                             div(class='form-group')
-                                input(type='text',placeholder='name',class='form-control')
+                                input(type='text',placeholder='Name',name='name',class='form-control',id='form_name')
 
                             br
-                            input(type='checkbox',name='checkbox',id='checkbox')
+                            input(type='checkbox',name='checkbox',placeholder='checkbox',id='form_checkbox')
                             Je soumets ma vidéo pour la tribune des supporters et j'accepte le règlement du jeu
 
                             br
                             button(type='submit',class='btn btn-success') Valider
+                        a(class='hide',href='#footer',id='form_hidden_link') Go to footer
 
             block footer
                 footer
@@ -160,6 +162,12 @@ html
             script(src='javascripts/vendor/bootstrap.min.js')
             script(src='//cdn.WebRTC-Experiment.com/RecordRTC.js')
             script(src='bower_components/html5-rtc-recorder/html5RTCRecorder.js')
+            script(src='http://www.parsecdn.com/js/parse-1.4.2.min.js')
+            script(src='javascripts/logic/changeBackgroundLogic.js')
+            script(src='javascripts/logic/mediaResizeLogic.js')
+            script(src='javascripts/logic/validatorsLogic.js')
+            script(src='javascripts/controller/actionController.js')
+            script(src='javascripts/httpComponents/requests.js')
             script(src='javascripts/main.js')
 
 

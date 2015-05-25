@@ -31,6 +31,13 @@ a.noLink:hover {text-decoration: none;}
 /* initially hide canvas */
 canvas, audio { visibility: hidden; }
 
+/* Input error style */
+.inputError {border-color:#FF0000; color: #FF0000; border-width: 2px; }
+.inputClean {border-color:#419641; color: #419641;  border-width: 1px; }
+
+/* Hide a link element */
+.hide { visibility: hidden; }
+
 
 
 

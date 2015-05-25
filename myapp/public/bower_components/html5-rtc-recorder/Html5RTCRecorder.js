@@ -28,8 +28,6 @@ Html5RTCRecorder.prototype = {
     rtc: '',
     frameRate: 60,
     quality: 10,
-    option: {download: false},
-    callback: '',
 
 
     /**
@@ -108,28 +106,36 @@ Html5RTCRecorder.prototype = {
             this.video.src = window.URL.createObjectURL(this.mediaStream);
         }
 
-        this.video.play();
+        if (undefined !== this.video.paused) {
+            this.video.play();
+        }
     },
 
     /**
      * Stop webcam live webcam feed for performance reasons
      */
     unStream: function() {
-        this.video.pause();
+        if (undefined !== this.video.paused) {
+            this.video.pause();
+        }
     },
 
     /**
      * Show video tag
      */
     show: function() {
-        this.video.style.visibility = 'display';
+        if (undefined !== this.video.paused) {
+            this.video.style.visibility = 'display';
+        }
     },
 
     /**
      * Hide video tag for performance reasons
      */
     hide: function() {
-        this.video.style.visibility = 'hidden';
+        if (undefined !== this.video.paused) {
+            this.video.style.visibility = 'hidden';
+        }
     },
 
     /**
@@ -167,80 +173,23 @@ Html5RTCRecorder.prototype = {
 
         this.recordAudio.startRecording();        
     },
-    
+
     /**
      * Stop both audio and video record
+     * Video and audio blob are saved inside the object
+     * So you can apply your own callback logic, after all medias have been recorded
      *
-     * @param url      string
-     * @param param    string
-     * @param selector string
+     * @param callback function
      *
      * @returns {undefined}
      */
-    stop: function (url, param, selector) {
+    stop: function (callback) {
         this.recordAudio.stopRecording(function() {
             this.recordVideo.stopRecording(function() {
-
-                //Execute call back function
-                if (selector.length > 0) {
-                    var fn = window[this.callback];
-                    fn(selector);
-                }
-
-                if (true === this.option.download) {
-                    this.download(this.recordAudio.getBlob(), 'video' + Date.now());
-                    this.download(this.recordVideo.getBlob(), 'video' + Date.now());
+                if (callback && typeof(callback) === "function") {
+                    callback();
                 }
             }.bind(this));
         }.bind(this));        
-    },
-
-
-    /**
-     * Post audio, video and other informations to php file, and execute callback function
-     *
-     * @param url   string
-     * @param param string
-     * @param type  string
-     *
-     * @returns {undefined}
-     */
-    postBlob: function (url, param, type) {
-
-        var blob = (type === 'audio') ? this.recordAudio.getBlob() : this.recordVideo.getBlob() ;
-        var extension = (type === 'audio') ? 'wav' : 'webm' ;
-
-        var reader = new window.FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function() {
-            base64data = reader.result;
-
-            var params = new FormData();
-            params.append("session", param);
-            params.append("media", blob);
-            params.append("extension", extension);
-
-            //var params = "session="+param+"&media="+base64data+"&extension="+extension;
-
-            client = new XMLHttpRequest();
-            client.onreadystatechange = function()
-            {
-                if ((client.readyState === 4) && (client.status === 200))
-                {
-                    console.log(client.response);
-
-                    //var fn = window[this.callback];
-                    //fn();
-
-                    client = null;
-                }
-            }.bind(this);
-            client.open("post", url, true);
-            client.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            client.send(params);
-
-        }.bind(this);
     }
-
-
 };
