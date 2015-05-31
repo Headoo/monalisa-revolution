@@ -1,32 +1,64 @@
-var express     = require('express');
-var router      = express.Router();
-var url         = require('url');
-var fse         = require('fs-extra');
-var fs          = require('fs');
-var bodyParser  = require('body-parser');
+var express             = require('express');
+var router              = express.Router();
+var url                 = require('url');
+var fse                 = require('fs-extra');
+var fs                  = require('fs');
+var bodyParser          = require('body-parser');
+var cache               = require('memory-cache');
 
-router.use(bodyParser.json({
-    keepExtensions: true,
-    limit: 900000000,
-    defer: true
-})); // support json encoded bodies
-router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+//PARSE INITIALIZATION
+var Parse               = require('node-parse-api').Parse;
+var PARSE_APP_ID        = "w5btRxd9dtAURWNO7Zyzjs8rfBOl7AfrKM3inxEV"; //APP ID
+var PARSE_REST_KEY      = "eC4wEVQRQ3Brv5JV8gxaaxUvtcwu4KwRW9eUY4oE"; //REST API KEY
+var PARSE_MASTER_KEY    = "8ilAeBCISlrya0SPW5SdstoMXVL4LV89t0qlyuMz"; //MASTER API KEY
+var options             = {
+    app_id: PARSE_APP_ID,
+    api_key: PARSE_REST_KEY
+};
+var parseApp            = new Parse(options);
 
 
-var session     = Date.now();
+var clientId            = '';
+var session             = Math.floor(Date.now() / 1000);
 
-//Read client parameters 
-var paramsPath  = 'clients/quinzedefrance/params.json'; 
-var params      = fse.readJsonSync(paramsPath, {throws: false});
+//Read client parameters
+var paramsPath          = 'clients/quinzedefrance/params.json';
+var params              = fse.readJsonSync(paramsPath, {throws: false});
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', {
-        parameters: params,
-        session: session
-    });
+    clientId = req.query.client;
+
+    //If there are already cached datas, get them without calling Parse
+    if (cache.size() > 0) {
+        res.render(clientId, {
+            parameters: cache.get('parseParams'),
+            session: session
+        });
+    } else {
+        // Get datas from Parse application
+        parseApp.find('ClientDatas', {clientName: clientId }, function (err, response) {
+            if (null === err) {
+                var parseParams = response.results[0];
+
+                cache.put('parseParams', parseParams);
+
+                res.render(clientId, {
+                    parameters: cache.get('parseParams'),
+                    session: session
+                });
+            } else {
+                //No internet connection, please connect first !
+                res.render('networkError', {
+                    parameters: 'hello'
+                });
+            }
+        });
+    }
 });
+
+
 
 router.post('/directory/create', function(req, res, next) {
     var session_param = req.body.session;
